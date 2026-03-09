@@ -4,3 +4,22 @@ redis
 httpx
 python-dotenv
 pydantic-settings
+
+How to run it (2 options)
+Option A: Docker (recommended, it’s already up)
+cd "E:\Projects\API Rate Limiting & Gateway System"
+docker compose up -d --build
+
+Open:
+
+Dashboard: http://localhost:3000
+Gateway: http://localhost:8000
+
+Option B: Run gateway locally (without Docker gateway)
+Since Docker gateway is already using port 8000, run local gateway on 8002:
+
+cd "E:\Projects\API Rate Limiting & Gateway System"
+.\gateway\.venv\Scripts\python -m pip install -r .\gateway\requirements.txt
+$env:UPSTREAM_URL="http://localhost:8080"
+$env:REDIS_URL="redis://localhost:6379/0"
+.\gateway\.venv\Scripts\python -m uvicorn gateway.main:app --reload --port 8002
